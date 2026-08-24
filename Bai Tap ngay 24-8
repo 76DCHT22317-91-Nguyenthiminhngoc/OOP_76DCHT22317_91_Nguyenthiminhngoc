@@ -1,0 +1,77 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <iomanip> 
+
+using namespace std;
+
+class NhanVien {
+private:
+    string manv, hoten, ngaysinh, diachi;
+
+public:
+    NhanVien() {
+        manv = "";
+        hoten = "";
+        ngaysinh = "";
+        diachi = "";
+    }
+
+    NhanVien(string ma, string ten, string ngay, string dchi) {
+        manv = ma;
+        hoten = ten;
+        ngaysinh = ngay;
+        diachi = dchi;
+    }
+
+  
+    void xuat() {
+        // setw(x): Dành ra một khoảng trống rộng x ký tự
+        // left: Căn lề trái cho chữ
+        cout << left << setw(10) << manv 
+             << " | " << setw(20) << hoten 
+             << " | " << setw(12) << ngaysinh 
+             << " | " << diachi << endl;
+    }
+};
+
+int main() {
+    int n;
+    cout << "Nhap so luong nhan vien: ";
+    cin >> n;
+    cin.ignore();
+
+    vector<NhanVien> dsnv; // Sử dụng Cách 3: Vector
+
+    for(int i = 0; i < n; i++) {
+        cout << "\n=== NHAP THONG TIN CHO NHAN VIEN THU " << i + 1 << " ===" << endl;
+        
+      
+        string ma_tam, ten_tam, ngay_tam, dc_tam;
+
+        cout << "Nhap ma nhan vien: ";
+        getline(cin, ma_tam);
+        cout << "Nhap ho ten: ";
+        getline(cin, ten_tam);
+        cout << "Nhap ngay sinh: ";
+        getline(cin, ngay_tam);
+        cout << "Nhap dia chi: ";
+        getline(cin, dc_tam);
+
+        dsnv.push_back(NhanVien(ma_tam, ten_tam, ngay_tam, dc_tam));
+    }
+
+    cout << "\n\n========================== DANH SACH NHAN VIEN ==========================" << endl;
+    
+    cout << left << setw(10) << "MA NV" 
+         << " | " << setw(20) << "HO TEN" 
+         << " | " << setw(12) << "NGAY SINH" 
+         << " | " << "DIA CHI" << endl;
+    cout << "-------------------------------------------------------------------------" << endl;
+    
+    for(int i = 0; i < dsnv.size(); i++) {
+        dsnv[i].xuat();
+    }
+
+    return 0;
+}
