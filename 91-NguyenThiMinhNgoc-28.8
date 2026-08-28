@@ -1,0 +1,103 @@
+#include <iostream>
+
+using namespace std;
+
+class MaTran {
+private:
+    int n;    // So hang
+    int m;    // So cot
+    int** a;  // Con tro cap 2 quan ly mang 2 chieu dong
+
+public:
+    // Ham khoi tao ma tran
+    MaTran(int hang = 0, int cot = 0) : n(hang), m(cot) {
+        if (n > 0 && m > 0) {
+            a = new int*[n];                   // Cap phat n hang
+            for (int i = 0; i < n; i++) {
+                a[i] = new int[m];             // Moi hang cap phat m cot
+            }
+        } else {
+            a = NULL;                          // Gan NULL de tranh loi con tro tro lung tung
+        }
+    }
+
+    // Ham huy de don dep bo nho
+    ~MaTran() {
+        if (a != NULL) {
+            for (int i = 0; i < n; i++) {
+                delete[] a[i];                 // Giai phong tung hang
+            }
+            delete[] a;                        // Giai phong mang con tro hang
+        }
+    }
+
+    // Phuong thuc nhap ma tran (Su dung 2 vong for long nhau)
+    void nhap() {
+        cout << "Nhap so hang (n): ";
+        cin >> n;
+        cout << "Nhap so cot (m): ";
+        cin >> m;
+
+        // Cap phat bo nho dong theo n va m vua nhap
+        a = new int*[n];
+        for (int i = 0; i < n; i++) {
+            a[i] = new int[m];
+        }
+
+        for (int i = 0; i < n; i++) {          // Vong lap 1: Duyet tung HANG
+            for (int j = 0; j < m; j++) {      // Vong lap 2: Duyet tung COT cua hang i
+                cout << "Nhap A[" << i << "][" << j << "]: ";
+                cin >> a[i][j];                // Nhap du lieu cho o A[i][j]
+            }
+        }
+    }
+
+    // Phuong thuc xuat ma tran
+    void xuat() const {
+        for (int i = 0; i < n; i++) {          // Duyet qua tung hang
+            for (int j = 0; j < m; j++) {      // Duyet qua tung cot
+                cout << a[i][j] << "\t";       // In phan tu kem phim Tab
+            }
+            cout << endl;                      // Het 1 hang thi xuong dong
+        }
+    }
+
+    // Khai bao ham ban (friend) de cong 2 ma tran
+    friend MaTran congMaTran(const MaTran& m1, const MaTran& m2);
+};
+
+// Dinh nghia ham ban de thuc hien cong hai ma tran dong cap
+MaTran congMaTran(const MaTran& m1, const MaTran& m2) {
+    MaTran kq(m1.n, m1.m);                    // Tao ma tran ket qua cung kich thuoc
+
+    for (int i = 0; i < m1.n; i++) {          // Vong for 1: Duyet qua cac hang
+        for (int j = 0; j < m1.m; j++) {      // Vong for 2: Duyet qua cac cot
+            kq.a[i][j] = m1.a[i][j] + m2.a[i][j]; // Cong 2 phan tu tai cung vi tri [i][j]
+        }
+    }
+
+    return kq;                                // Tra ve ma tran tong
+}
+
+int main() {
+    MaTran m1, m2;                            // Khai bao 2 doi tuong ma tran
+
+    cout << "=== NHAP MA TRAN 1 ===\n";
+    m1.nhap();                                // Goi ham nhap cho ma tran 1
+
+    cout << "\n=== NHAP MA TRAN 2 (CUNG KICH THUOC) ===\n";
+    m2.nhap();                                // Goi ham nhap cho ma tran 2
+
+    cout << "\n--- MA TRAN 1 BAN DAU ---\n";
+    m1.xuat();                                // In ma tran 1
+
+    cout << "\n--- MA TRAN 2 BAN DAU ---\n";
+    m2.xuat();                                // In ma tran 2
+
+    MaTran tong = congMaTran(m1, m2);          // Goi ham ban de tinh tong 2 ma tran
+
+    cout << "\n--- MA TRAN KET QUA (TONG) ---\n";
+    tong.xuat();                              // In ma tran tong ra man hinh
+
+    return 0;
+}
