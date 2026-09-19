@@ -1,0 +1,75 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+// Câu 1: Khai báo lớp môn học
+class MonHoc {
+protected:
+    string tenMon; //
+    float CC, KT, DT; //[cite: 1]
+};
+
+// Câu 1: Khai báo lớp sinh viên kế thừa từ lớp môn học[cite: 1]
+class SinhVien : public MonHoc {
+private:
+    string hoTen, lop, maSV; //[cite: 1]
+
+public:
+    // Câu 2: Phương thức nhập thông tin sinh viên[cite: 1]
+    void nhap() {
+        cout << "Nhap ho ten SV: "; cin.ignore(); getline(cin, hoTen);
+        cout << "Nhap lop: "; getline(cin, lop);
+        cout << "Nhap ma SV: "; cin >> maSV;
+        cout << "Nhap ten mon hoc: "; cin.ignore(); getline(cin, tenMon);
+        cout << "Nhap diem CC, KT, DT: "; cin >> CC >> KT >> DT;
+    }
+
+    // Câu 2: Phương thức tính điểm học phần[cite: 1]
+    float tinhDiemHP() {
+        return CC * 0.1 + KT * 0.3 + DT * 0.6;
+    }
+
+    // Câu 2: Phương thức xuất thông tin sinh viên[cite: 1]
+    void xuat() {
+        cout << "\nMa SV: " << maSV << " | Ho ten: " << hoTen << " | Lop: " << lop;
+        cout << " | Mon: " << tenMon << " | CC: " << CC << " | KT: " << KT << " | DT: " << DT;
+        cout << " | Diem HP: " << tinhDiemHP();
+    }
+
+    // Kiểm tra sinh viên có bị cấm thi không[cite: 1]
+    bool biCamThi() {
+        return (CC < 5 || KT == 0); //[cite: 1]
+    }
+};
+
+int main() {
+    int n;
+    cout << "Nhap so lượng sinh vien n: ";
+    cin >> n;
+
+    vector<SinhVien> ds(n);
+
+    // Câu 3: Nhập vào n sinh viên[cite: 1]
+    for (int i = 0; i < n; i++) {
+        cout << "\n--- Nhap sinh vien thu " << i + 1 << " ---\n";
+        ds[i].nhap();
+    }
+
+    // Câu 3: In danh sách sinh viên bị cấm thi[cite: 1]
+    cout << "\n\n=== DANH SÁCH SINH VIÊN BỊ CẤM THI ===";
+    bool coCamThi = false;
+    for (int i = 0; i < n; i++) {
+        if (ds[i].biCamThi()) {
+            ds[i].xuat();
+            coCamThi = true;
+        }
+    }
+
+    if (!coCamThi) {
+        cout << "\nKhong co sinh vien nao bi cam thi.";
+    }
+
+    return 0;
+}
