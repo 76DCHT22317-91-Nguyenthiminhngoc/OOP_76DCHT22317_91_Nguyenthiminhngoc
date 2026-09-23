@@ -1,0 +1,101 @@
+#include <iostream>
+using namespace std;
+
+class PS1
+{
+	protected:
+    int tuSo;
+    int mauSo;
+public:
+    void nhap()
+    {
+        cout << "Nhap tuso: ";
+        cin >> tuSo;
+
+        do
+        {
+            cout << "Nhap mauso: ";
+            cin >> mauSo;
+
+        } 
+		while (mauSo == 0);
+    }
+
+	void in(){//1/2, 1/-2=> -1/2}
+		cout <<ts<<"/"<<ms<<endl;
+		
+    void toigian()
+    {
+//tim ucln cua ts va ms
+	int a=abs (ts), b=abs(ms);
+//thuat toan oclid
+	while (b!=0) //(a,b)=(b,r)
+	{int r=a%b //tim phan du a chia b
+	a=b;
+	b=r；
+	}
+	int uc=a;//ucln-a+
+ 		ts=ts/uc;
+ 		ms=ms/uc;
+    }
+};
+
+class PS2: public PS1{
+//nap chong toan tu =
+public:
+bool operator= (PS2 a){
+//this =a;
+ts=a.ts;
+ms=a .ms;
+return true;
+｝
+
+//nap chong toan tu >, ktra this›a: ts/ms ›a.ts/a.ms //1/2 va 1/3, 
+bool operator ›(PS2 a){
+return ts*a.ms ›ms*a.ts ;//1*3>1*2 => true, //1/3 va 1/2 => 1*2>1*3 →> sai
+}
+
+//return float (ts)/ms>float (a.ts)/a.ms; 
+
+int main(){}
+PS2 a[10]; 
+	int n;
+do 
+	{
+	cout << "Nhap so luong phan so (1-10): "; cin >> n; 
+	}
+		while (n < 1 l l n › 10); 
+	cout くく "Nhap danh sach"; 
+
+for (int i = 0; i ‹ n; i++) 
+	{
+	cout <く " Nhan so thu " <<i+1<< :" ";
+		a[i].nhap(); 
+		a[1]. toigian(); 
+		}
+	cout << "Danh sach vua nhap ";
+for (int i = 0; i ‹ n; i++) 
+{
+	a[i].in(); 
+	cout くく "   ";
+}
+	for (int 1 = 0; i < n - 1; 1++)
+	for （int j =i+1; j<n; j++)
+	{
+	if (a[j] › a[i])
+	{ PS2 tam;
+		tam = a[i];
+		a[i]= a[j];
+		a[j]= tam;
+		}
+	}
+}
+cout << "Danh sach sau khi giam dan ";
+	for (int i = 0; i<n; i++)
+	{
+	a[i].in();
+	cout <<"  ";
+		}
+	cout << endl;
+return 0;
+｝
