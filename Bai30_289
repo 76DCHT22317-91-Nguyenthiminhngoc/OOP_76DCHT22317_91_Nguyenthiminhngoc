@@ -1,0 +1,91 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+class sp1{
+	protected:
+		double phanthuc;
+		double phanao;
+	public:
+		sp1(double thuc=0, double ao = 0){
+			phanthuc = thuc;
+			phanao = ao;
+		}
+	void nhap(){
+		cout<<"nhap phan thuc : ";
+		cin>> phanthuc;
+		cout<<"nhap phan ao : ";
+		cin>> phanao;
+	}	
+	void in()const{
+		if(phanao>=0)
+		cout<< phanthuc<<"+"<<phanao<<"i";
+		else
+		cout<<phanthuc<<"-"<<phanao<<"i";
+	}
+	double module()const{
+		return sqrt(phanthuc * phanthuc + phanao * phanao);
+	}
+};
+//cau2
+class sp2 : public sp1{
+	public :
+		// Hàm tao
+    sp2(double thuc = 0, double ao = 0) : sp1(thuc, ao) {}
+
+    // nap chong toan tu gan
+    sp2& operator = (const sp2& other) {
+        if (this != &other) {
+            phanthuc = other.phanthuc;
+            phanao = other.phanao;
+        }
+        return *this;
+    }
+
+    // nap chonbg toan tu lon hon (>) theo module
+    bool operator > (const sp2& other) const {
+        return this->module() > other.module();
+    }
+};
+
+// ==================== CÂU 3: CHUONG TRÌNH CHÍNH ====================
+int main() {
+    int n;
+    cout << "Nhap so luong so phuc (toi da 10): ";
+    cin >> n;
+    
+    if (n > 10) n = 10;
+    if (n <= 0) {
+        cout << "So luong khong hop le!";
+        return 0;
+    }
+
+    sp2 ds[10];
+    
+    // Nhap danh sach so phuc
+    cout << "\n--- NHAP DANH SACH SO PH?C ---\n";
+    for (int i = 0; i < n; i++) {
+        cout << "Nhap so phuc thu " << i + 1 << ":\n";
+        ds[i].nhap();
+    }
+
+    // Sap xep danh sach giam dan theo module (su dung thuat toán Bubble Sort)
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (!(ds[i] > ds[j])) { // Neu ds[i] ko lon hon ds[j] thi doi cho
+                sp2 temp = ds[i];
+                ds[i] = ds[j];
+                ds[j] = temp;
+            }
+        }
+    }
+    // In danh sách sau khi sap xep
+    cout << "\n--- DANH SACH SAU KHI SAP XEP GIAM DAN THEO MODULE ---\n";
+    for (int i = 0; i < n; i++) {
+        cout << "So phuc " << i + 1 << ": ";
+        ds[i].in();
+        cout << " (module: " << ds[i].module() << ")\n";
+    }
+
+    return 0;
+}
+
